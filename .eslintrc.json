@@ -13,9 +13,7 @@
     "sourceType": "module"
   },
   "plugins": ["react"],
-  "rules": {
-    "space-before-function-paren": ["error", "never"]
-  },
+  "rules": {},
   "ignorePatterns": [
     "app/_layout.tsx",
     "app/+html.tsx",
