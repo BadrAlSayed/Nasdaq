@@ -1,62 +1,76 @@
-import FontAwesome from "@expo/vector-icons/FontAwesome";
+import FontAwesome from '@expo/vector-icons/FontAwesome'
 import {
   DarkTheme,
   DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
-import { useFonts } from "expo-font";
-import { SplashScreen, Stack } from "expo-router";
-import { useEffect } from "react";
-import { useColorScheme } from "react-native";
+  ThemeProvider
+} from '@react-navigation/native'
+import { useFonts } from 'expo-font'
+import { SplashScreen, Stack } from 'expo-router'
+import React, { useEffect } from 'react'
+import { useColorScheme, Image } from 'react-native'
 
 export {
   // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from "expo-router";
+  ErrorBoundary
+} from 'expo-router'
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: "(stocks)",
-};
+  initialRouteName: '(stocks)'
+}
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+SplashScreen.preventAutoHideAsync()
 
-export default function RootLayout() {
+export default function RootLayout(): React.ReactElement | null {
   const [loaded, error] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
-    ...FontAwesome.font,
-  });
+    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    ...FontAwesome.font
+  })
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
-    if (error) throw error;
-  }, [error]);
+    if (error) throw error
+  }, [error])
 
   useEffect(() => {
     if (loaded) {
       setTimeout(() => {
-        SplashScreen.hideAsync();
-      }, 8000);
+        SplashScreen.hideAsync()
+      }, 3000)
     }
-  }, [loaded]);
+  }, [loaded])
 
   if (!loaded) {
-    return null;
+    return null
   }
 
-  return <RootLayoutNav />;
+  return <RootLayoutNav />
 }
 
-function RootLayoutNav() {
-  const colorScheme = useColorScheme();
+function RootLayoutNav(): React.ReactElement {
+  const colorScheme = useColorScheme()
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
-        <Stack.Screen name="(stocks)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+        <Stack.Screen
+          name='(stocks)'
+          options={{
+            headerTitle: '',
+            headerLeft: () => (
+              <Image
+                source={require('../assets/images/NasdaqLogo.png')}
+                resizeMode='contain'
+              />
+            ),
+            headerStyle: {
+              backgroundColor: '#191A28'
+            }
+          }}
+        />
+        <Stack.Screen name='modal' options={{ presentation: 'modal' }} />
       </Stack>
     </ThemeProvider>
-  );
+  )
 }
