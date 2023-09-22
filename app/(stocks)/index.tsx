@@ -14,9 +14,17 @@ export default function Home(): React.ReactElement {
     queryFn: getTickers
   })
 
+  const [searchTerm, setSearchTerm] = React.useState('')
+
+  const filteredData = tickersQuery.data?.results?.filter(
+    (stock) =>
+      stock.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      stock.ticker.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+
   return (
     <View style={styles.container}>
-      <SearchBar />
+      <SearchBar setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
       {tickersQuery.isLoading ? (
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.row}>
@@ -44,7 +52,7 @@ export default function Home(): React.ReactElement {
         <Text>Error</Text>
       ) : (
         <FlatList
-          data={tickersQuery.data.results}
+          data={filteredData}
           numColumns={2}
           keyExtractor={(item) => item.ticker}
           renderItem={({ item }) => <TickerCard data={item} />}
