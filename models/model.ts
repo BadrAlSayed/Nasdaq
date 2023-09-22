@@ -70,3 +70,24 @@ export interface Address {
   state: string
   postal_code: string
 }
+
+export interface PreviousClose {
+  adjusted: boolean
+  queryCount: number
+  request_id: string
+  results: PreviousCloseResults[]
+  resultsCount: number
+  status: string
+  ticker: string
+}
+
+export interface PreviousCloseResults {
+  T: string
+  c: number
+  h: number
+  l: number
+  o: number
+  t: number
+  v: number
+  vw: number
+}
