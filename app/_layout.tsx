@@ -73,7 +73,10 @@ function RootLayoutNav(): React.ReactElement {
               }
             }}
           />
-          <Stack.Screen name='modal' options={{ presentation: 'modal' }} />
+          <Stack.Screen
+            name='modal'
+            options={{ presentation: 'modal', headerShown: false }}
+          />
         </Stack>
       </QueryClientProvider>
     </ThemeProvider>
