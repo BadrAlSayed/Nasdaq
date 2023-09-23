@@ -38,7 +38,7 @@ export default function ModalScreen(): React.ReactElement {
 
   return (
     <View style={styles.container}>
-      {console.log('what', params)}
+      {console.log('params', params)}
       {console.log('ticker', tickerDetailsQuery)}
       {tickerDetailsQuery.isLoading ||
       tickerPrevCloseQuery.isLoading ||
@@ -51,8 +51,12 @@ export default function ModalScreen(): React.ReactElement {
         <>
           <View>
             <Header
-              tickerDetailsQuery={tickerDetailsQuery}
-              tickerPrevCloseQuery={tickerPrevCloseQuery}
+              logo={tickerDetailsQuery.data?.results.branding?.icon_url}
+              ticker={
+                (tickerDetailsQuery.data as TickerDetails)?.results.ticker
+              }
+              open={(tickerPrevCloseQuery.data as PreviousClose).results[0].o}
+              close={(tickerPrevCloseQuery.data as PreviousClose).results[0].c}
             />
             <View>
               <View
@@ -61,7 +65,11 @@ export default function ModalScreen(): React.ReactElement {
                 darkColor='rgba(255,255,255,0.1)'
               />
             </View>
-            <About tickerDetailsQuery={tickerDetailsQuery} />
+            <About
+              tickerDescription={
+                (tickerDetailsQuery.data as TickerDetails)?.results.description
+              }
+            />
             <View>
               <View
                 style={styles.separator}
@@ -69,7 +77,12 @@ export default function ModalScreen(): React.ReactElement {
                 darkColor='rgba(255,255,255,0.1)'
               />
             </View>
-            <Statistics tickerPrevCloseQuery={tickerPrevCloseQuery} />
+            <Statistics
+              open={(tickerPrevCloseQuery.data as PreviousClose).results[0].o}
+              close={(tickerPrevCloseQuery.data as PreviousClose).results[0].c}
+              high={(tickerPrevCloseQuery.data as PreviousClose).results[0].h}
+              low={(tickerPrevCloseQuery.data as PreviousClose).results[0].l}
+            />
             <View>
               <View
                 style={styles.separator}
@@ -87,7 +100,8 @@ export default function ModalScreen(): React.ReactElement {
               }
               handlePress={() => {
                 Linking.openURL(
-                  tickerDetailsQuery.data.results.homepage_url
+                  (tickerDetailsQuery.data as TickerDetails).results
+                    .homepage_url
                 ).catch((error) => {
                   console.error('Failed to open URL:', error)
                 })
