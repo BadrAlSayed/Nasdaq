@@ -10,7 +10,7 @@ interface Props {
 const About: React.FC<Props> = ({ tickerDetailsQuery }) => {
   const tickerDetails = (tickerDetailsQuery.data as TickerDetails).results
   return (
-    <View style={styles.second}>
+    <View style={styles.container}>
       <Text style={styles.about}>About</Text>
       {tickerDetails?.description === undefined ? (
         <Text style={styles.description}>No description present</Text>
@@ -22,15 +22,17 @@ const About: React.FC<Props> = ({ tickerDetailsQuery }) => {
 }
 
 const styles = StyleSheet.create({
-  second: {
+  container: {
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     width: 350
+    // height: 340
   },
   about: {
     fontSize: 15,
     fontStyle: 'normal',
-    fontWeight: '700'
+    fontWeight: '700',
+    marginBottom: 10
   },
   description: {
     fontSize: 14,

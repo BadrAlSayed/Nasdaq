@@ -66,6 +66,7 @@ function RootLayoutNav(): React.ReactElement {
                 <Image
                   source={require('../assets/images/NasdaqLogo.png')}
                   resizeMode='contain'
+                  style={{ width: 105, height: 50 }}
                 />
               ),
               headerStyle: {

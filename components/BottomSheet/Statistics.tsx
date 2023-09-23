@@ -13,26 +13,34 @@ const Statistics: React.FC<Props> = ({ tickerPrevCloseQuery }) => {
 
   return (
     <View style={styles.container}>
-      <Text>STATISTICS</Text>
+      <Text style={styles.title}>STATISTICS</Text>
       <View style={styles.price}>
-        <View>
-          <View style={styles.row}>
+        <View style={styles.first}>
+          <View>
             <Text style={styles.priceTitle}>Open</Text>
-            <Text>{tickerPrevClose.o}</Text>
+            <Text style={styles.priceStyle}>{`$${tickerPrevClose.o.toFixed(
+              2
+            )}`}</Text>
           </View>
           <View>
             <Text style={styles.priceTitle}>High</Text>
-            <Text>{tickerPrevClose.h}</Text>
+            <Text style={styles.priceStyle}>{`$${tickerPrevClose.h.toFixed(
+              2
+            )}`}</Text>
           </View>
         </View>
-        <View>
+        <View style={styles.first}>
           <View>
             <Text style={styles.priceTitle}>Close</Text>
-            <Text>{tickerPrevClose.c}</Text>
+            <Text style={styles.priceStyle}>{`$${tickerPrevClose.c.toFixed(
+              2
+            )}`}</Text>
           </View>
           <View>
             <Text style={styles.priceTitle}>Low</Text>
-            <Text>{tickerPrevClose.l}</Text>
+            <Text style={styles.priceStyle}>{`$${tickerPrevClose.l.toFixed(
+              2
+            )}`}</Text>
           </View>
         </View>
       </View>
@@ -44,14 +52,20 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    width: 350,
-    height: 130
+    width: 350
+  },
+  title: {
+    color: '#FFF',
+    fontSize: 15,
+    fontStyle: 'normal',
+    fontWeight: '700',
+    marginBottom: 15
   },
   price: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 15,
-    width: 200
+    width: 200,
+    minHeight: 120
   },
   priceTitle: {
     fontSize: 15,
@@ -60,8 +74,17 @@ const styles = StyleSheet.create({
     color: 'rgba(255, 255, 255, 0.60)',
     marginBottom: 5
   },
+  priceStyle: {
+    color: '#FFF',
+    fontSize: 15,
+    fontStyle: 'normal',
+    fontWeight: '700'
+  },
   row: {
     color: 'red',
+    justifyContent: 'space-between'
+  },
+  first: {
     justifyContent: 'space-between'
   }
 })
