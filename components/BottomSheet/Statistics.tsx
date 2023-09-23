@@ -1,16 +1,14 @@
 import React from 'react'
 import { StyleSheet } from 'react-native'
 import { Text, View } from '../Themed'
-import type { PreviousClose } from '../../models/model'
-import type { UseQueryResult } from '@tanstack/react-query'
 
 interface Props {
-  tickerPrevCloseQuery: UseQueryResult<PreviousClose, undefined>
+  open: number
+  close: number
+  high: number
+  low: number
 }
-const Statistics: React.FC<Props> = ({ tickerPrevCloseQuery }) => {
-  const tickerPrevClose = (tickerPrevCloseQuery.data as PreviousClose)
-    .results[0]
-
+const Statistics: React.FC<Props> = ({ open, close, high, low }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>STATISTICS</Text>
@@ -18,29 +16,21 @@ const Statistics: React.FC<Props> = ({ tickerPrevCloseQuery }) => {
         <View style={styles.first}>
           <View>
             <Text style={styles.priceTitle}>Open</Text>
-            <Text style={styles.priceStyle}>{`$${tickerPrevClose.o.toFixed(
-              2
-            )}`}</Text>
+            <Text style={styles.priceStyle}>{`$${open?.toFixed(2)}`}</Text>
           </View>
           <View>
             <Text style={styles.priceTitle}>High</Text>
-            <Text style={styles.priceStyle}>{`$${tickerPrevClose.h.toFixed(
-              2
-            )}`}</Text>
+            <Text style={styles.priceStyle}>{`$${high?.toFixed(2)}`}</Text>
           </View>
         </View>
         <View style={styles.first}>
           <View>
             <Text style={styles.priceTitle}>Close</Text>
-            <Text style={styles.priceStyle}>{`$${tickerPrevClose.c.toFixed(
-              2
-            )}`}</Text>
+            <Text style={styles.priceStyle}>{`$${close?.toFixed(2)}`}</Text>
           </View>
           <View>
             <Text style={styles.priceTitle}>Low</Text>
-            <Text style={styles.priceStyle}>{`$${tickerPrevClose.l.toFixed(
-              2
-            )}`}</Text>
+            <Text style={styles.priceStyle}>{`$${low?.toFixed(2)}`}</Text>
           </View>
         </View>
       </View>

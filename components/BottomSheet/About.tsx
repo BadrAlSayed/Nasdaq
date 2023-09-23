@@ -1,21 +1,19 @@
 import React from 'react'
 import { StyleSheet } from 'react-native'
 import { Text, View } from '../Themed'
-import { type UseQueryResult } from '@tanstack/react-query'
-import type { TickerDetails } from '../../models/model'
 
 interface Props {
-  tickerDetailsQuery: UseQueryResult<TickerDetails, undefined>
+  tickerDescription: string
 }
-const About: React.FC<Props> = ({ tickerDetailsQuery }) => {
-  const tickerDetails = (tickerDetailsQuery.data as TickerDetails).results
+const About: React.FC<Props> = ({ tickerDescription }) => {
+  // const tickerDetails = (tickerDetailsQuery.data as TickerDetails).results
   return (
     <View style={styles.container}>
       <Text style={styles.about}>About</Text>
-      {tickerDetails?.description === undefined ? (
+      {tickerDescription === undefined ? (
         <Text style={styles.description}>No description present</Text>
       ) : (
-        <Text style={styles.description}>{tickerDetails?.description}</Text>
+        <Text style={styles.description}>{tickerDescription}</Text>
       )}
     </View>
   )

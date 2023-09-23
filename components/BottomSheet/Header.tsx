@@ -1,24 +1,17 @@
 import React from 'react'
 import { StyleSheet, Image } from 'react-native'
 import { Text, View } from '../Themed'
-import { type UseQueryResult } from '@tanstack/react-query'
-import type { PreviousClose, TickerDetails } from '../../models/model'
 import { Link } from 'expo-router'
 
 interface HeaderProps {
-  tickerDetailsQuery: UseQueryResult<TickerDetails, undefined>
-  tickerPrevCloseQuery: UseQueryResult<PreviousClose, undefined>
+  logo: string | undefined
+  ticker: string
+  open: number
+  close: number
 }
 
-const Header: React.FC<HeaderProps> = ({
-  tickerDetailsQuery,
-  tickerPrevCloseQuery
-}) => {
+const Header: React.FC<HeaderProps> = ({ logo, ticker, open, close }) => {
   const API_KEY = process.env.EXPO_PUBLIC_API_KEY
-
-  const tickerDetails = (tickerDetailsQuery.data as TickerDetails).results
-  const tickerPrevClose = (tickerPrevCloseQuery.data as PreviousClose)
-    .results[0]
 
   const priceChange = (close: number, open: number): [string, object] => {
     const change = ((close - open) / open) * 100
@@ -34,21 +27,17 @@ const Header: React.FC<HeaderProps> = ({
   return (
     <View style={styles.container}>
       <View style={styles.headerData}>
-        {tickerDetails?.branding?.icon_url === undefined ? (
+        {logo === undefined ? (
           <>
             <View style={styles.logo}>
-              <Text style={styles.logoInitials}>
-                {(
-                  tickerDetailsQuery.data as TickerDetails
-                )?.results?.ticker.slice(0, 2)}
-              </Text>
+              <Text style={styles.logoInitials}>{ticker.slice(0, 2)}</Text>
             </View>
           </>
         ) : (
           <>
             <Image
               source={{
-                uri: `${tickerDetails?.branding?.icon_url}?apiKey=${API_KEY}`
+                uri: `${logo}?apiKey=${API_KEY}`
               }}
               style={{ width: 45, height: 45 }}
               resizeMode='contain'
@@ -57,13 +46,11 @@ const Header: React.FC<HeaderProps> = ({
         )}
 
         <View>
-          <Text>{(tickerPrevCloseQuery.data as PreviousClose).ticker}</Text>
+          <Text>{ticker}</Text>
           <View style={{ flexDirection: 'row' }}>
-            <Text style={{ paddingRight: 3 }}>
-              {`$${tickerPrevClose.c.toFixed(2)}`}
-            </Text>
-            <Text style={priceChange(tickerPrevClose.c, tickerPrevClose.o)[1]}>
-              {priceChange(tickerPrevClose.c, tickerPrevClose.o)[0]}
+            <Text style={{ paddingRight: 3 }}>{`$${close.toFixed(2)}`}</Text>
+            <Text style={priceChange(close, open)[1]}>
+              {priceChange(close, open)[0]}
             </Text>
           </View>
         </View>
