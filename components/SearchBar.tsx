@@ -5,8 +5,13 @@ import { TextInput, StyleSheet } from 'react-native'
 interface Props {
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>
   searchTerm: string
+  // debouncedSetSearchTerm: (text: string) => void
 }
-const SearchBar: React.FC<Props> = ({ setSearchTerm, searchTerm }) => {
+const SearchBar: React.FC<Props> = ({
+  setSearchTerm,
+  searchTerm,
+  debouncedSetSearchTerm
+}) => {
   return (
     <View style={styles.container}>
       <TextInput
@@ -15,6 +20,7 @@ const SearchBar: React.FC<Props> = ({ setSearchTerm, searchTerm }) => {
         value={searchTerm}
         onChangeText={(text) => {
           setSearchTerm(text)
+          debouncedSetSearchTerm(text)
         }}
       />
     </View>

@@ -1,31 +1,43 @@
 import { ScrollView, StyleSheet, FlatList } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 // import EditScreenInfo from '../../components/EditScreenInfo'
 import { View, Text } from '../../components/Themed'
 import LoadingCard from '../../components/LoadingCard'
 import SearchBar from '../../components/SearchBar'
 import { getTickers } from '../../api/Tickers'
-import { useQuery } from '@tanstack/react-query'
+import { useInfiniteQuery } from '@tanstack/react-query'
 import TickerCard from '../../components/TickerCard'
 
+import { debounce } from 'lodash'
+
 export default function Home(): React.ReactElement {
-  const tickersQuery = useQuery({
-    queryKey: ['tickers'],
-    queryFn: getTickers
-  })
+  // const tickersQuery = useQuery({
+  //   queryKey: ['tickers'],
+  //   queryFn: getTickers
+  // })
+  const [searchTerm, setSearchTerm] = useState('')
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
+  const debouncedSetSearchTerm = debounce((text: string) => {
+    setDebouncedSearchTerm(text)
+  }, 2000)
+  const { data, fetchNextPage, hasNextPage, isLoading, isError, isFetching } =
+    useInfiniteQuery({
+      queryKey: ['tickers', debouncedSearchTerm],
+      queryFn: ({ pageParam }) => getTickers(pageParam, debouncedSearchTerm),
+      getNextPageParam: (lastPage, allPages) => lastPage.next_url
+    })
 
-  const [searchTerm, setSearchTerm] = React.useState('')
-
-  const filteredData = tickersQuery.data?.results?.filter(
-    (stock) =>
-      stock.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      stock.ticker.toLowerCase().includes(searchTerm.toLowerCase())
-  )
+  // console.log('Work', data)
 
   return (
     <View style={styles.container}>
-      <SearchBar setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
-      {tickersQuery.isLoading ? (
+      <SearchBar
+        setSearchTerm={setSearchTerm}
+        searchTerm={searchTerm}
+        debouncedSetSearchTerm={debouncedSetSearchTerm}
+      />
+      {/* {console.log('data', data?.pages.results)} */}
+      {isLoading ? (
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.row}>
             <LoadingCard />
@@ -48,15 +60,28 @@ export default function Home(): React.ReactElement {
             <LoadingCard />
           </View>
         </ScrollView>
-      ) : tickersQuery.isError ? (
+      ) : isError ? (
         <Text>Error</Text>
+      ) : data.pages[0].status === 'ERROR' ? (
+        <Text>Exceeded the maximum number of requests per minute</Text>
       ) : (
-        <FlatList
-          data={filteredData}
-          numColumns={2}
-          keyExtractor={(item) => item.ticker}
-          renderItem={({ item }) => <TickerCard data={item} />}
-        />
+        <>
+          {/* {console.log('filtered', tickersQuery.data)} */}
+          <FlatList
+            data={data.pages.flatMap((page) => page.results)}
+            numColumns={2}
+            keyExtractor={(item) => item.ticker}
+            renderItem={({ item }) => <TickerCard data={item} />}
+            onEndReachedThreshold={0.3}
+            onEndReached={() => {
+              if (hasNextPage) {
+                fetchNextPage().catch((error) => {
+                  console.log('error', error)
+                })
+              }
+            }}
+          />
+        </>
       )}
     </View>
   )
@@ -79,9 +104,5 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row'
-  },
-  card: {
-    width: 165,
-    height: 131
   }
 })
