@@ -1,15 +1,15 @@
-import { StatusBar } from 'expo-status-bar'
-import { Platform, StyleSheet, ActivityIndicator } from 'react-native'
+import { StyleSheet, ActivityIndicator, Linking } from 'react-native'
 
-import EditScreenInfo from '../components/EditScreenInfo'
 import { Text, View } from '../components/Themed'
+
 import React from 'react'
-import { useQueryClient, useQuery, UseQueryResult } from '@tanstack/react-query'
+import { useQuery, type UseQueryResult } from '@tanstack/react-query'
 import Header from '../components/BottomSheet/Header'
 import About from '../components/BottomSheet/About'
 import Statistics from '../components/BottomSheet/Statistics'
+import Button from '../components/Button'
 import type { PreviousClose, TickerDetails } from '../models/model'
-import { useGlobalSearchParams } from 'expo-router'
+import { useLocalSearchParams } from 'expo-router'
 import { getTicker, getTickerPrevClose } from '../api/Tickers'
 
 export default function ModalScreen(): React.ReactElement {
@@ -17,7 +17,7 @@ export default function ModalScreen(): React.ReactElement {
     id: string
   }
 
-  const params: ParamProps = useGlobalSearchParams()
+  const params = useLocalSearchParams() as ParamProps
 
   const tickerDetailsQuery: UseQueryResult<TickerDetails, undefined> = useQuery(
     {
@@ -38,38 +38,61 @@ export default function ModalScreen(): React.ReactElement {
 
   return (
     <View style={styles.container}>
+      {console.log('what', params)}
       {console.log('ticker', tickerDetailsQuery)}
       {tickerDetailsQuery.isLoading ||
       tickerPrevCloseQuery.isLoading ||
       tickerDetailsQuery.isFetching ||
       tickerPrevCloseQuery.isFetching ? (
         <ActivityIndicator size='large' color='#FFF' />
+      ) : tickerDetailsQuery.data?.status === 'ERROR' ? (
+        <Text>Exceeded the maximum number of requests per minute</Text>
       ) : (
         <>
-          <Header
-            tickerDetailsQuery={tickerDetailsQuery}
-            tickerPrevCloseQuery={tickerPrevCloseQuery}
-          />
-          <View
-            style={styles.separator}
-            lightColor='#eee'
-            darkColor='rgba(255,255,255,0.1)'
-          />
-          <About tickerDetailsQuery={tickerDetailsQuery} />
-          <View
-            style={styles.separator}
-            lightColor='#eee'
-            darkColor='rgba(255,255,255,0.1)'
-          />
-          <Statistics tickerPrevCloseQuery={tickerPrevCloseQuery} />
-          <View
-            style={styles.separator}
-            lightColor='#eee'
-            darkColor='rgba(255,255,255,0.1)'
-          />
+          <View>
+            <Header
+              tickerDetailsQuery={tickerDetailsQuery}
+              tickerPrevCloseQuery={tickerPrevCloseQuery}
+            />
+            <View>
+              <View
+                style={styles.separator}
+                lightColor='#eee'
+                darkColor='rgba(255,255,255,0.1)'
+              />
+            </View>
+            <About tickerDetailsQuery={tickerDetailsQuery} />
+            <View>
+              <View
+                style={styles.separator}
+                lightColor='#eee'
+                darkColor='rgba(255,255,255,0.1)'
+              />
+            </View>
+            <Statistics tickerPrevCloseQuery={tickerPrevCloseQuery} />
+            <View>
+              <View
+                style={styles.separator}
+                lightColor='#eee'
+                darkColor='rgba(255,255,255,0.1)'
+              />
+            </View>
+          </View>
 
           <View style={styles.button}>
-            <Text>Hello</Text>
+            <Button
+              title='View Website'
+              isDisabled={
+                tickerDetailsQuery.data?.results.homepage_url === undefined
+              }
+              handlePress={() => {
+                Linking.openURL(
+                  tickerDetailsQuery.data.results.homepage_url
+                ).catch((error) => {
+                  console.error('Failed to open URL:', error)
+                })
+              }}
+            />
           </View>
         </>
       )}
@@ -82,57 +105,16 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-start',
-    paddingTop: 30
+    paddingTop: 20
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold'
-  },
+
   separator: {
     marginVertical: 30,
     height: 1,
-    width: '80%'
-  },
-  logo: {
-    width: 35,
-    height: 35,
-    backgroundColor: '#2C2E45',
-    borderRadius: 10,
-    borderWidth: 0.5,
-    borderColor: '#323443',
-    marginRight: 3
-  },
-  first: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: 350,
-    height: 66
-  },
-  firstLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around'
-  },
-  firstRight: {
-    // flexDirection: 'row'
-  },
-  second: {
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    width: 350,
-    height: 66
-  },
-  price: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-
-    width: 200,
-    height: 66
+    width: '100%'
   },
   button: {
-    alignItems: 'flex-end',
-    justifyContent: 'flex-end',
-    backgroundColor: 'red'
+    marginTop: 'auto',
+    marginBottom: 25
   }
 })
