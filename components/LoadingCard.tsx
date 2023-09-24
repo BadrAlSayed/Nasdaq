@@ -14,28 +14,26 @@ const LoadingCard: React.FC = () => {
 
 const styles = StyleSheet.create({
   container: {
-    width: 165,
-    height: 131,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#242639',
     borderRadius: 20,
-    padding: 20,
+    padding: 25,
     margin: 10,
     borderWidth: 0.5,
     borderColor: '#323443'
   },
   logo: {
-    width: 35,
-    height: 35,
+    paddingHorizontal: 17,
+    paddingVertical: 17,
     backgroundColor: '#2C2E45',
     borderRadius: 10,
     borderWidth: 0.5,
     borderColor: '#323443'
   },
   initials: {
-    width: 63,
-    height: 21,
+    paddingHorizontal: 30,
+    paddingVertical: 10,
     borderRadius: 5,
     backgroundColor: '#2C2E45',
     marginVertical: 10,
@@ -43,8 +41,8 @@ const styles = StyleSheet.create({
     borderColor: '#323443'
   },
   name: {
-    width: 108,
-    height: 15,
+    paddingVertical: 10,
+    paddingHorizontal: 60,
     borderRadius: 5,
     backgroundColor: '#2C2E45',
     borderWidth: 0.5,

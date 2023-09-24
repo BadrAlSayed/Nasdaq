@@ -116,16 +116,18 @@ export default function ModalScreen(): React.ReactElement {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    paddingTop: 20
+    display: 'flex',
+    gap: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 30,
+    width: '100%',
+    height: '100%'
   },
 
   separator: {
-    marginVertical: 30,
     height: 1,
-    width: '100%'
+    width: '100%',
+    marginVertical: 20
   },
   button: {
     marginTop: 'auto',

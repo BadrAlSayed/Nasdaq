@@ -23,16 +23,12 @@ const Button: React.FC<ButtonProps> = ({ title, handlePress, isDisabled }) => {
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    height: 50,
-    padding: 10,
+    paddingVertical: 15,
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 10,
     alignSelf: 'stretch',
-    width: 350,
     borderRadius: 25,
     backgroundColor: '#1F202F',
-    boxShadow: '0px 0px 10px 0px #40AFFF',
     borderWidth: 0.5,
     borderColor: '#40AFFF',
     shadowColor: '#40AFFF',

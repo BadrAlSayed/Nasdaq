@@ -15,12 +15,13 @@ export default function Home(): React.ReactElement {
   //   queryKey: ['tickers'],
   //   queryFn: getTickers
   // })
+
   const [searchTerm, setSearchTerm] = useState('')
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
   const debouncedSetSearchTerm = debounce((text: string) => {
     setDebouncedSearchTerm(text)
-  }, 2000)
-  const { data, fetchNextPage, hasNextPage, isLoading, isError, isFetching } =
+  }, 500)
+  const { data, fetchNextPage, hasNextPage, isLoading, isError } =
     useInfiniteQuery({
       queryKey: ['tickers', debouncedSearchTerm],
       queryFn: ({ pageParam }) => getTickers(pageParam, debouncedSearchTerm),
@@ -89,9 +90,16 @@ export default function Home(): React.ReactElement {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
+    // alignItems: 'center',
+    // justifyContent: 'flex-start'
+    height: '100%',
+    width: '100%',
+
+    flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'flex-start'
+    gap: 20,
+    flexShrink: 0
   },
   title: {
     fontSize: 20,

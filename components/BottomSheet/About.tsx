@@ -22,15 +22,14 @@ const About: React.FC<Props> = ({ tickerDescription }) => {
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    width: 350
-    // height: 340
+    alignItems: 'flex-start'
   },
   about: {
     fontSize: 15,
     fontStyle: 'normal',
     fontWeight: '700',
-    marginBottom: 10
+    paddingBottom: 10,
+    color: '#FFF'
   },
   description: {
     fontSize: 14,

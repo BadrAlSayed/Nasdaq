@@ -17,6 +17,7 @@ const SearchBar: React.FC<Props> = ({
       <TextInput
         style={styles.input}
         placeholder='Search for stocks'
+        placeholderTextColor='white'
         value={searchTerm}
         onChangeText={(text) => {
           setSearchTerm(text)
@@ -29,20 +30,31 @@ const SearchBar: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: 20
+    // alignItems: 'center',
+    // justifyContent: 'center',
+
+    // margin: 20
+
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingBottom: 10,
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    gap: 10,
+
+    width: '100%'
   },
   input: {
-    height: 40,
-    width: 350,
+    // paddingLeft: 20,
+    // paddingRight: 200,
     opacity: 0.3,
     borderRadius: 25,
     backgroundColor: '#323443',
     padding: 10,
     borderWidth: 1,
     borderColor: '#323443',
-    color: 'white'
+    color: 'white',
+    width: '100%'
   }
 })
 

@@ -14,21 +14,21 @@ const Statistics: React.FC<Props> = ({ open, close, high, low }) => {
       <Text style={styles.title}>STATISTICS</Text>
       <View style={styles.price}>
         <View style={styles.first}>
-          <View>
-            <Text style={styles.priceTitle}>Open</Text>
+          <View style={styles.one}>
+            <Text style={[styles.priceTitle]}>Open</Text>
             <Text style={styles.priceStyle}>{`$${open?.toFixed(2)}`}</Text>
           </View>
-          <View>
-            <Text style={styles.priceTitle}>High</Text>
+          <View style={styles.one}>
+            <Text style={[styles.priceTitle]}>High</Text>
             <Text style={styles.priceStyle}>{`$${high?.toFixed(2)}`}</Text>
           </View>
         </View>
         <View style={styles.first}>
-          <View>
+          <View style={styles.one}>
             <Text style={styles.priceTitle}>Close</Text>
             <Text style={styles.priceStyle}>{`$${close?.toFixed(2)}`}</Text>
           </View>
-          <View>
+          <View style={styles.one}>
             <Text style={styles.priceTitle}>Low</Text>
             <Text style={styles.priceStyle}>{`$${low?.toFixed(2)}`}</Text>
           </View>
@@ -40,9 +40,12 @@ const Statistics: React.FC<Props> = ({ open, close, high, low }) => {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    width: 350
+    // justifyContent: 'flex-start',
+    // alignItems: 'flex-start'
+
+    paddingBottom: 0,
+
+    width: '100%'
   },
   title: {
     color: '#FFF',
@@ -54,15 +57,14 @@ const styles = StyleSheet.create({
   price: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: 200,
-    minHeight: 120
+    backgroundColor: 'red'
   },
   priceTitle: {
     fontSize: 15,
     fontStyle: 'normal',
     fontWeight: '400',
-    color: 'rgba(255, 255, 255, 0.60)',
-    marginBottom: 5
+    color: 'rgba(255, 255, 255, 0.60)'
+    // marginBottom: 5
   },
   priceStyle: {
     color: '#FFF',
@@ -75,7 +77,18 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   first: {
-    justifyContent: 'space-between'
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    gap: 15,
+    alignSelf: 'stretch',
+    width: '50%'
+  },
+  one: {
+    // width: '100%',
+    gap: 5,
+    justifyContent: 'flex-start',
+    flexDirection: 'column',
+    alignItems: 'flex-start'
   }
 })
 

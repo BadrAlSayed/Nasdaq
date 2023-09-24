@@ -27,35 +27,37 @@ const Header: React.FC<HeaderProps> = ({ logo, ticker, open, close }) => {
   return (
     <View style={styles.container}>
       <View style={styles.headerData}>
-        {logo === undefined ? (
-          <>
-            <View style={styles.logo}>
-              <Text style={styles.logoInitials}>{ticker.slice(0, 2)}</Text>
-            </View>
-          </>
-        ) : (
-          <>
-            <Image
-              source={{
-                uri: `${logo}?apiKey=${API_KEY}`
-              }}
-              style={{ width: 45, height: 45 }}
-              resizeMode='contain'
-            />
-          </>
-        )}
+        <View style={styles.headerLeftItems}>
+          {logo === undefined ? (
+            <>
+              <View style={styles.logo}>
+                <Text style={styles.logoInitials}>{ticker.slice(0, 2)}</Text>
+              </View>
+            </>
+          ) : (
+            <>
+              <Image
+                source={{
+                  uri: `${logo}?apiKey=${API_KEY}`
+                }}
+                style={styles.realLogo}
+                resizeMode='contain'
+              />
+            </>
+          )}
 
-        <View>
-          <Text>{ticker}</Text>
-          <View style={{ flexDirection: 'row' }}>
-            <Text style={{ paddingRight: 3 }}>{`$${close.toFixed(2)}`}</Text>
-            <Text style={priceChange(close, open)[1]}>
-              {priceChange(close, open)[0]}
-            </Text>
+          <View style={styles.headerNumbers}>
+            <Text style={styles.tickerText}>{ticker}</Text>
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={{ paddingRight: 3 }}>{`$${close.toFixed(2)}`}</Text>
+              <Text style={priceChange(close, open)[1]}>
+                {priceChange(close, open)[0]}
+              </Text>
+            </View>
           </View>
         </View>
       </View>
-      <View>
+      <View style={styles.headerRightItems}>
         <Link href='../'>
           <View style={styles.closeButton}>
             <Text style={styles.closeButtonText}>x</Text>
@@ -68,26 +70,21 @@ const Header: React.FC<HeaderProps> = ({ logo, ticker, open, close }) => {
 
 const styles = StyleSheet.create({
   logo: {
-    width: 45,
-    height: 45,
     backgroundColor: '#2C2E45',
     borderRadius: 10,
     borderWidth: 0.5,
     borderColor: '#323443',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    padding: 15
   },
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    width: 350,
-    height: 66
+    alignItems: 'center'
   },
   headerData: {
     flexDirection: 'row',
-    alignItems: 'flex-end',
-    justifyContent: 'space-around',
-    width: 150
+    justifyContent: 'space-between'
   },
   logoInitials: {
     color: '#FFF',
@@ -125,6 +122,30 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     justifyContent: 'flex-end',
     backgroundColor: '#242639'
+  },
+  headerNumbers: {
+    paddingLeft: 15
+  },
+  headerLeftItems: {
+    // alignItems: 'center',
+    // gap: 15
+    flexDirection: 'row'
+  },
+  headerRightItems: {
+    flexDirection: 'column',
+    alignItems: 'flex-end'
+  },
+  tickerText: {
+    color: '#FFF',
+    fontSize: 28,
+    fontStyle: 'normal',
+    fontWeight: '700'
+  },
+  realLogo: {
+    padding: 24,
+    borderRadius: 5,
+
+    alignSelf: 'center'
   }
 })
 
