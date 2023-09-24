@@ -7,20 +7,19 @@ import {
 import { getTickers } from '../api/Tickers'
 import type { Tickers } from '../models/model'
 
-interface props {
+interface Props {
   searchTerm: string
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>
-  data: InfiniteData<Tickers>
-  fetchNextPage: Promise<InfiniteQueryObserverResult<Tickers, unknown>>
-  hasNextPage: boolean
+  data: InfiniteData<Tickers> | undefined
+  fetchNextPage: () => Promise<InfiniteQueryObserverResult<Tickers, unknown>>
+  hasNextPage: boolean | undefined
   isLoading: boolean
   isError: boolean
 }
-const useTickersSearch = () => {
+const useTickersSearch = (): Props => {
   const [searchTerm, setSearchTerm] = useState('')
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
 
-  // Debounce the search term
   useEffect(() => {
     const timerId = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm)
@@ -34,7 +33,8 @@ const useTickersSearch = () => {
   const { data, fetchNextPage, hasNextPage, isLoading, isError } =
     useInfiniteQuery({
       queryKey: ['tickers', debouncedSearchTerm],
-      queryFn: ({ pageParam }) => getTickers(pageParam, debouncedSearchTerm),
+      queryFn: async ({ pageParam }) =>
+        await getTickers(pageParam, debouncedSearchTerm),
       getNextPageParam: (lastPage, allPages) => lastPage.next_url
     })
 

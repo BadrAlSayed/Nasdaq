@@ -1,23 +1,26 @@
 import React from 'react'
 import { StyleSheet, Dimensions } from 'react-native'
 import { View, Text } from './Themed'
-import type { TickersResultData } from '../models/model'
-
 import { Link } from 'expo-router'
 
-const TickerCard: React.FC<TickersResultData> = ({ data }) => {
+interface Props {
+  ticker: string
+  name: string
+}
+
+const TickerCard: React.FC<Props> = ({ ticker, name }) => {
   const screenWidth = Dimensions.get('window').width
   const itemWidth = (screenWidth - 60) / 2
 
   return (
-    <Link style={[styles.link]} href={`/${data.ticker}`}>
+    <Link style={[styles.link]} href={`/${ticker}`}>
       <View style={[styles.container, { width: itemWidth }]}>
         <View style={styles.logo}>
-          <Text style={styles.logoInitials}>{data.ticker.slice(0, 2)}</Text>
+          <Text style={styles.logoInitials}>{ticker.slice(0, 2)}</Text>
         </View>
-        <Text style={styles.initials}>{data.ticker}</Text>
+        <Text style={styles.initials}>{ticker}</Text>
         <Text style={styles.name} numberOfLines={1} ellipsizeMode='tail'>
-          {data.name}
+          {name}
         </Text>
       </View>
     </Link>

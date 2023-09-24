@@ -21,7 +21,7 @@ export default function ModalScreen(): React.ReactElement {
 
   const tickerDetailsQuery: UseQueryResult<TickerDetails, undefined> = useQuery(
     {
-      queryKey: ['details'],
+      queryKey: ['details', params.id],
       queryFn: async () => {
         return await getTicker(params.id)
       }
@@ -30,86 +30,87 @@ export default function ModalScreen(): React.ReactElement {
 
   const tickerPrevCloseQuery: UseQueryResult<PreviousClose, undefined> =
     useQuery({
-      queryKey: ['prevClose'],
+      queryKey: ['prevClose', params.id],
       queryFn: async () => {
         return await getTickerPrevClose(params.id)
       }
     })
 
+  if (
+    tickerDetailsQuery.isLoading ||
+    tickerPrevCloseQuery.isLoading ||
+    tickerDetailsQuery.isFetching ||
+    tickerPrevCloseQuery.isFetching
+  )
+    return (
+      <View style={styles.containerLoading}>
+        <ActivityIndicator size='large' color='#FFF' />
+      </View>
+    )
+  if (tickerDetailsQuery.data?.status === 'ERROR')
+    return (
+      <View style={styles.containerLoading}>
+        <Text>Exceeded the maximum number of requests per minute</Text>
+      </View>
+    )
   return (
     <View style={styles.container}>
-      {console.log('params', params)}
-      {console.log('ticker', tickerDetailsQuery)}
-      {tickerDetailsQuery.isLoading ||
-      tickerPrevCloseQuery.isLoading ||
-      tickerDetailsQuery.isFetching ||
-      tickerPrevCloseQuery.isFetching ? (
-        <ActivityIndicator size='large' color='#FFF' />
-      ) : tickerDetailsQuery.data?.status === 'ERROR' ? (
-        <Text>Exceeded the maximum number of requests per minute</Text>
-      ) : (
-        <>
-          <View>
-            <Header
-              logo={tickerDetailsQuery.data?.results.branding?.icon_url}
-              ticker={
-                (tickerDetailsQuery.data as TickerDetails)?.results.ticker
-              }
-              open={(tickerPrevCloseQuery.data as PreviousClose).results[0].o}
-              close={(tickerPrevCloseQuery.data as PreviousClose).results[0].c}
-            />
-            <View>
-              <View
-                style={styles.separator}
-                lightColor='#eee'
-                darkColor='rgba(255,255,255,0.1)'
-              />
-            </View>
-            <About
-              tickerDescription={
-                (tickerDetailsQuery.data as TickerDetails)?.results.description
-              }
-            />
-            <View>
-              <View
-                style={styles.separator}
-                lightColor='#eee'
-                darkColor='rgba(255,255,255,0.1)'
-              />
-            </View>
-            <Statistics
-              open={(tickerPrevCloseQuery.data as PreviousClose).results[0].o}
-              close={(tickerPrevCloseQuery.data as PreviousClose).results[0].c}
-              high={(tickerPrevCloseQuery.data as PreviousClose).results[0].h}
-              low={(tickerPrevCloseQuery.data as PreviousClose).results[0].l}
-            />
-            <View>
-              <View
-                style={styles.separator}
-                lightColor='#eee'
-                darkColor='rgba(255,255,255,0.1)'
-              />
-            </View>
-          </View>
+      <View>
+        <Header
+          logo={tickerDetailsQuery.data?.results.branding?.icon_url}
+          ticker={(tickerDetailsQuery.data as TickerDetails)?.results.ticker}
+          open={(tickerPrevCloseQuery.data as PreviousClose).results[0].o}
+          close={(tickerPrevCloseQuery.data as PreviousClose).results[0].c}
+        />
+        <View>
+          <View
+            style={styles.separator}
+            lightColor='#eee'
+            darkColor='rgba(255,255,255,0.1)'
+          />
+        </View>
+        <About
+          tickerDescription={
+            (tickerDetailsQuery.data as TickerDetails)?.results.description
+          }
+        />
+        <View>
+          <View
+            style={styles.separator}
+            lightColor='#eee'
+            darkColor='rgba(255,255,255,0.1)'
+          />
+        </View>
+        <Statistics
+          open={(tickerPrevCloseQuery.data as PreviousClose).results[0].o}
+          close={(tickerPrevCloseQuery.data as PreviousClose).results[0].c}
+          high={(tickerPrevCloseQuery.data as PreviousClose).results[0].h}
+          low={(tickerPrevCloseQuery.data as PreviousClose).results[0].l}
+        />
+        <View>
+          <View
+            style={styles.separator}
+            lightColor='#eee'
+            darkColor='rgba(255,255,255,0.1)'
+          />
+        </View>
+      </View>
 
-          <View style={styles.button}>
-            <Button
-              title='View Website'
-              isDisabled={
-                tickerDetailsQuery.data?.results.homepage_url === undefined
-              }
-              handlePress={() => {
-                Linking.openURL(
-                  (tickerDetailsQuery.data as TickerDetails).results
-                    .homepage_url
-                ).catch((error) => {
-                  console.error('Failed to open URL:', error)
-                })
-              }}
-            />
-          </View>
-        </>
-      )}
+      <View style={styles.button}>
+        <Button
+          title='View Website'
+          isDisabled={
+            tickerDetailsQuery.data?.results.homepage_url === undefined
+          }
+          handlePress={() => {
+            Linking.openURL(
+              (tickerDetailsQuery.data as TickerDetails).results.homepage_url
+            ).catch((error) => {
+              console.error('Failed to open URL:', error)
+            })
+          }}
+        />
+      </View>
     </View>
   )
 }
@@ -132,5 +133,14 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 'auto',
     marginBottom: 25
+  },
+  containerLoading: {
+    display: 'flex',
+    gap: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 30,
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center'
   }
 })
