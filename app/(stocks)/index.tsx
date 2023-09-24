@@ -1,42 +1,55 @@
 import { ScrollView, StyleSheet, FlatList } from 'react-native'
-import React, { useState } from 'react'
-// import EditScreenInfo from '../../components/EditScreenInfo'
+import React from 'react'
 import { View, Text } from '../../components/Themed'
 import LoadingCard from '../../components/LoadingCard'
 import SearchBar from '../../components/SearchBar'
-import { getTickers } from '../../api/Tickers'
-import { useInfiniteQuery } from '@tanstack/react-query'
 import TickerCard from '../../components/TickerCard'
-
-import { debounce } from 'lodash'
+import useTickersSearch from '../../hooks/useTickerSearch'
 
 export default function Home(): React.ReactElement {
-  // const tickersQuery = useQuery({
-  //   queryKey: ['tickers'],
-  //   queryFn: getTickers
-  // })
-
-  const [searchTerm, setSearchTerm] = useState('')
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
-  const debouncedSetSearchTerm = debounce((text: string) => {
-    setDebouncedSearchTerm(text)
-  }, 500)
-  const { data, fetchNextPage, hasNextPage, isLoading, isError } =
-    useInfiniteQuery({
-      queryKey: ['tickers', debouncedSearchTerm],
-      queryFn: ({ pageParam }) => getTickers(pageParam, debouncedSearchTerm),
-      getNextPageParam: (lastPage, allPages) => lastPage.next_url
-    })
-
-  // console.log('Work', data)
+  const {
+    searchTerm,
+    setSearchTerm,
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isLoading,
+    isError
+  } = useTickersSearch()
 
   return (
+    // <View style={styles.container}>
+    //   <SearchBar
+    //     setSearchTerm={setSearchTerm}
+    //     searchTerm={searchTerm}
+    //     // debouncedSetSearchTerm={debouncedSetSearchTerm}
+    //   />
+    //   <View style={{ marginTop: -15 }}>
+    //     <View style={styles.row}>
+    //       <LoadingCard />
+    //       <LoadingCard />
+    //     </View>
+    //     <View style={styles.row}>
+    //       <LoadingCard />
+    //       <LoadingCard />
+    //     </View>
+    //     <View style={styles.row}>
+    //       <LoadingCard />
+    //       <LoadingCard />
+    //     </View>
+    //     <View style={styles.row}>
+    //       <LoadingCard />
+    //       <LoadingCard />
+    //     </View>
+    //     <View style={styles.row}>
+    //       <LoadingCard />
+    //       <LoadingCard />
+    //     </View>
+    //   </View>
+    // </View>
+
     <View style={styles.container}>
-      <SearchBar
-        setSearchTerm={setSearchTerm}
-        searchTerm={searchTerm}
-        debouncedSetSearchTerm={debouncedSetSearchTerm}
-      />
+      <SearchBar setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
       {/* {console.log('data', data?.pages.results)} */}
       {isLoading ? (
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -68,6 +81,7 @@ export default function Home(): React.ReactElement {
       ) : (
         <>
           {/* {console.log('filtered', tickersQuery.data)} */}
+          {/* <View style={{ marginTop: 5 }}> */}
           <FlatList
             data={data.pages.flatMap((page) => page.results)}
             numColumns={2}
@@ -82,6 +96,7 @@ export default function Home(): React.ReactElement {
               }
             }}
           />
+          {/* </View> */}
         </>
       )}
     </View>
