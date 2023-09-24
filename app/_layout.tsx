@@ -27,8 +27,8 @@ SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout(): React.ReactElement | null {
   const [loaded, error] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-    ...FontAwesome.font
+    DMSans_Regular: require('../assets/fonts/DMSans-Regular.ttf'),
+    DMSans_Bold: require('../assets/fonts/DMSans-Bold.ttf')
   })
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
@@ -55,7 +55,7 @@ function RootLayoutNav(): React.ReactElement {
   const colorScheme = useColorScheme()
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={DarkTheme}>
       <QueryClientProvider client={queryClient}>
         <Stack>
           <Stack.Screen

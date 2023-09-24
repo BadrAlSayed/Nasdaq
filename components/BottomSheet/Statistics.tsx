@@ -50,8 +50,7 @@ const styles = StyleSheet.create({
   title: {
     color: '#FFF',
     fontSize: 15,
-    fontStyle: 'normal',
-    fontWeight: '700',
+    fontFamily: 'DMSans_Bold',
     marginBottom: 15
   },
   price: {
@@ -61,16 +60,14 @@ const styles = StyleSheet.create({
   },
   priceTitle: {
     fontSize: 15,
-    fontStyle: 'normal',
-    fontWeight: '400',
+    fontFamily: 'DMSans_Regular',
     color: 'rgba(255, 255, 255, 0.60)'
     // marginBottom: 5
   },
   priceStyle: {
     color: '#FFF',
     fontSize: 15,
-    fontStyle: 'normal',
-    fontWeight: '700'
+    fontFamily: 'DMSans_Bold'
   },
   row: {
     color: 'red',

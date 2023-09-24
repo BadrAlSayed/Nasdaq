@@ -1,13 +1,17 @@
 import React from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Dimensions } from 'react-native'
 import { View } from './Themed'
 
 const LoadingCard: React.FC = () => {
+  const screenWidth = Dimensions.get('window').width
+  const itemWidth = (screenWidth - 60) / 2
   return (
-    <View style={styles.container}>
-      <View style={styles.logo}></View>
-      <View style={styles.initials}></View>
-      <View style={styles.name}></View>
+    <View>
+      <View style={[styles.container, { width: itemWidth }]}>
+        <View style={styles.logo}></View>
+        <View style={styles.initials}></View>
+        <View style={styles.name}></View>
+      </View>
     </View>
   )
 }
@@ -18,7 +22,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#242639',
     borderRadius: 20,
-    padding: 25,
+    padding: 26,
     margin: 10,
     borderWidth: 0.5,
     borderColor: '#323443'

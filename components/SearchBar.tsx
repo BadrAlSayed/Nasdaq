@@ -54,7 +54,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#323443',
     color: 'white',
-    width: '100%'
+    width: '100%',
+    fontSize: 15,
+    fontFamily: 'DMSans_Regular'
   }
 })
 

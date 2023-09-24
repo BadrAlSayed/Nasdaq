@@ -6,7 +6,6 @@ interface Props {
   tickerDescription: string
 }
 const About: React.FC<Props> = ({ tickerDescription }) => {
-  // const tickerDetails = (tickerDetailsQuery.data as TickerDetails).results
   return (
     <View style={styles.container}>
       <Text style={styles.about}>About</Text>
@@ -26,15 +25,13 @@ const styles = StyleSheet.create({
   },
   about: {
     fontSize: 15,
-    fontStyle: 'normal',
-    fontWeight: '700',
+    fontFamily: 'DMSans_Bold',
     paddingBottom: 10,
     color: '#FFF'
   },
   description: {
     fontSize: 14,
-    fontStyle: 'normal',
-    fontWeight: '400',
+    fontFamily: 'DMSans_Regular',
     color: 'rgba(255, 255, 255, 0.6)'
   }
 })

@@ -1,6 +1,6 @@
 import React from 'react'
 import { TouchableOpacity, StyleSheet } from 'react-native'
-import { View, Text } from './Themed'
+import { Text } from './Themed'
 
 interface ButtonProps {
   title: string
@@ -15,7 +15,11 @@ const Button: React.FC<ButtonProps> = ({ title, handlePress, isDisabled }) => {
       onPress={isDisabled ? undefined : handlePress}
       activeOpacity={isDisabled ? 1 : 0.2}
     >
-      <Text style={isDisabled ? styles.disabledText : null}>{title}</Text>
+      <Text
+        style={[styles.buttonText, isDisabled ? styles.disabledText : null]}
+      >
+        {title}
+      </Text>
     </TouchableOpacity>
   )
 }
@@ -35,6 +39,11 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 1,
     shadowRadius: 5
+  },
+  buttonText: {
+    color: '#40AFFF',
+    fontSize: 15,
+    fontFamily: 'DMSans_Bold'
   },
   disabled: {
     backgroundColor: '#2E2F3F',

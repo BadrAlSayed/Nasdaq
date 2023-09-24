@@ -49,8 +49,10 @@ const Header: React.FC<HeaderProps> = ({ logo, ticker, open, close }) => {
           <View style={styles.headerNumbers}>
             <Text style={styles.tickerText}>{ticker}</Text>
             <View style={{ flexDirection: 'row' }}>
-              <Text style={{ paddingRight: 3 }}>{`$${close.toFixed(2)}`}</Text>
-              <Text style={priceChange(close, open)[1]}>
+              <Text
+                style={[styles.textStyle, { paddingRight: 3 }]}
+              >{`$${close.toFixed(2)}`}</Text>
+              <Text style={[styles.textStyle, priceChange(close, open)[1]]}>
                 {priceChange(close, open)[0]}
               </Text>
             </View>
@@ -75,7 +77,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: '#323443',
     justifyContent: 'center',
-    padding: 15
+    paddingHorizontal: 18
   },
   container: {
     flexDirection: 'row',
@@ -90,8 +92,7 @@ const styles = StyleSheet.create({
     color: '#FFF',
     textAlign: 'center',
     fontSize: 12,
-    fontStyle: 'normal',
-    fontWeight: '400',
+    fontFamily: 'DMSans_Regular',
     justifyContent: 'center'
   },
   positive: {
@@ -138,14 +139,17 @@ const styles = StyleSheet.create({
   tickerText: {
     color: '#FFF',
     fontSize: 28,
-    fontStyle: 'normal',
-    fontWeight: '700'
+    fontFamily: 'DMSans_Bold'
   },
   realLogo: {
     padding: 24,
     borderRadius: 5,
 
     alignSelf: 'center'
+  },
+  textStyle: {
+    fontFamily: 'DMSans_Regular',
+    fontSize: 15
   }
 })
 
