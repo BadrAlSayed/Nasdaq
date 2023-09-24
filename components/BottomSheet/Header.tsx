@@ -62,7 +62,7 @@ const Header: React.FC<HeaderProps> = ({ logo, ticker, open, close }) => {
       <View style={styles.headerRightItems}>
         <Link href='../'>
           <Image
-            source={require('../../assets/images/Cancel3.png')}
+            source={require('../../assets/images/Cancel.png')}
             resizeMode='contain'
           />
         </Link>
