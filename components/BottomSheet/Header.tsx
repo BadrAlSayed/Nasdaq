@@ -61,9 +61,10 @@ const Header: React.FC<HeaderProps> = ({ logo, ticker, open, close }) => {
       </View>
       <View style={styles.headerRightItems}>
         <Link href='../'>
-          <View style={styles.closeButton}>
-            <Text style={styles.closeButtonText}>x</Text>
-          </View>
+          <Image
+            source={require('../../assets/images/Cancel3.png')}
+            resizeMode='contain'
+          />
         </Link>
       </View>
     </View>
