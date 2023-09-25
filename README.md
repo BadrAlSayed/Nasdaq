@@ -1,4 +1,4 @@
-# Nasdaq
+![image](https://github.com/BadrAlSayed/Nasdaq/assets/81752730/c8a4f067-e465-4433-a048-4f5ddcd5b9da)# Nasdaq
 
 ## Deployment
 I deployed the application. You can access it with Expo Go with this qr code
@@ -11,6 +11,15 @@ I deployed the application. You can access it with Expo Go with this qr code
 
 [Android](https://github.com/BadrAlSayed/Nasdaq/assets/81752730/f1bfb168-1b39-4e9c-b33a-1c1e1dee9c29)
 
+Or with these links
+
+##Ios
+
+exp://u.expo.dev/update/7a8cca95-a6e1-42a7-8846-8663d8d5e221
+
+##Android
+
+exp://u.expo.dev/update/300c8f8f-a35d-4479-9cd0-f5a8a4cb2846
 
 ## Screenshots
 
