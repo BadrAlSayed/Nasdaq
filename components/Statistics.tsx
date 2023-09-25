@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet } from 'react-native'
-import { Text, View } from '../Themed'
+import { Text, View } from './Themed'
 
 interface Props {
   open: number
@@ -75,7 +75,6 @@ const styles = StyleSheet.create({
     width: '50%'
   },
   one: {
-    // width: '100%',
     gap: 5,
     justifyContent: 'flex-start',
     flexDirection: 'column',

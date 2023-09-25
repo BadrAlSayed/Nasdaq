@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react-native'
 import React from 'react'
-import Header from '../../BottomSheet/Header'
+import Header from '../../Header'
 
 describe('About', () => {
   it('should render ticker name', () => {

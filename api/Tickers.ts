@@ -11,7 +11,6 @@ export const getTickers = async (
     ? `${pageParam}&apikey=${API_KEY}`
     : `${API}/tickers`
   const query = debouncedSearchTerm ? `/search/${debouncedSearchTerm}` : ''
-  console.log('ecn', `${endpoint}${query}`)
   try {
     const response = await fetch(`${endpoint}${query}`)
     const data = await response.json()

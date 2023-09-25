@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react-native'
 import React from 'react'
-import About from '../../BottomSheet/About'
+import About from '../../About'
 
 describe('About', () => {
   it('should render the correct ticker description', () => {

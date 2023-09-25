@@ -15,7 +15,6 @@ const SearchBar: React.FC<Props> = ({ setSearchTerm, searchTerm }) => {
         placeholderTextColor='white'
         value={searchTerm}
         onChangeText={(text) => {
-          console.log('text', text)
           setSearchTerm(text)
         }}
       />
