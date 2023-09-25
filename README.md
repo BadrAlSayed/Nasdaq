@@ -1,4 +1,4 @@
-![image](https://github.com/BadrAlSayed/Nasdaq/assets/81752730/c8a4f067-e465-4433-a048-4f5ddcd5b9da)# Nasdaq
+# Nasdaq
 
 ## Deployment
 I deployed the application. You can access it with Expo Go with this qr code
