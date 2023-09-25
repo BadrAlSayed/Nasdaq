@@ -38,7 +38,8 @@ const styles = StyleSheet.create({
     shadowColor: '#40AFFF',
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 1,
-    shadowRadius: 5
+    shadowRadius: 5,
+    elevation: 10
   },
   buttonText: {
     color: '#40AFFF',
@@ -49,7 +50,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#2E2F3F',
     borderColor: '#5E5F6F',
     shadowColor: '#5E5F6F',
-    shadowOpacity: 0.5
+    shadowOpacity: 0.5,
+    elevation: 10
   },
   disabledText: {
     color: '#7E7F8F'
