@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react-native'
 import React from 'react'
-import Statistics from '../../BottomSheet/Statistics'
+import Statistics from '../../Statistics'
 
 describe('About', () => {
   it('should render the correct statistics values', () => {

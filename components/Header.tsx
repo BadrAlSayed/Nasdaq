@@ -1,16 +1,22 @@
 import React from 'react'
-import { StyleSheet, Image } from 'react-native'
-import { Text, View } from '../Themed'
-import { Link } from 'expo-router'
+import { StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { Text, View } from './Themed'
 
 interface HeaderProps {
   logo: string | undefined
   ticker: string
   open: number
   close: number
+  closeModal: () => void
 }
 
-const Header: React.FC<HeaderProps> = ({ logo, ticker, open, close }) => {
+const Header: React.FC<HeaderProps> = ({
+  logo,
+  ticker,
+  open,
+  close,
+  closeModal
+}) => {
   const API_KEY = process.env.EXPO_PUBLIC_API_KEY
 
   const priceChange = (close: number, open: number): [string, object] => {
@@ -59,14 +65,14 @@ const Header: React.FC<HeaderProps> = ({ logo, ticker, open, close }) => {
           </View>
         </View>
       </View>
-      <View style={styles.headerRightItems}>
-        <Link href='../'>
+      <TouchableOpacity style={styles.headerRightItems} onPress={closeModal}>
+        <View style={styles.closeButton}>
           <Image
-            source={require('../../assets/images/Cancel.png')}
+            source={require('../assets/images/Cancel.png')}
             resizeMode='contain'
           />
-        </Link>
-      </View>
+        </View>
+      </TouchableOpacity>
     </View>
   )
 }
@@ -106,10 +112,6 @@ const styles = StyleSheet.create({
     color: 'grey'
   },
   closeButton: {
-    borderRadius: 50,
-    borderColor: '#323443',
-    borderWidth: 1,
-    backgroundColor: '#242639',
     padding: 5,
     flexDirection: 'row',
     alignItems: 'center',
@@ -129,8 +131,6 @@ const styles = StyleSheet.create({
     paddingLeft: 15
   },
   headerLeftItems: {
-    // alignItems: 'center',
-    // gap: 15
     flexDirection: 'row'
   },
   headerRightItems: {
