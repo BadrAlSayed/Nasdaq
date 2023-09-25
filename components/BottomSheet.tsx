@@ -35,10 +35,7 @@ const BottomSheetComponent: React.FC<Props> = ({ ticker, closeModal }) => {
   // renders
   return (
     <View style={styles.container}>
-      {tickerDetailsQuery.isLoading ||
-      tickerPrevCloseQuery.isLoading ||
-      tickerDetailsQuery.isFetching ||
-      tickerPrevCloseQuery.isFetching ? (
+      {tickerDetailsQuery.isLoading || tickerPrevCloseQuery.isLoading ? (
         <ActivityIndicator size='large' color='#FFF' />
       ) : tickerDetailsQuery.data?.status === 'ERROR' ? (
         <Text>Exceeded the maximum number of requests per minute</Text>

@@ -1,31 +1,19 @@
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider
-} from '@react-navigation/native'
+import { DarkTheme, ThemeProvider } from '@react-navigation/native'
 import { useFonts } from 'expo-font'
 import { SplashScreen, Stack } from 'expo-router'
 import React, { useEffect } from 'react'
-import { useColorScheme, Image } from 'react-native'
+import { Image } from 'react-native'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import {
-  BottomSheetModal,
-  BottomSheetModalProvider
-} from '@gorhom/bottom-sheet'
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 
 const queryClient = new QueryClient()
 
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary
-} from 'expo-router'
+export { ErrorBoundary } from 'expo-router'
 
 export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
   initialRouteName: '(stocks)'
 }
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout(): React.ReactElement | null {
@@ -34,7 +22,6 @@ export default function RootLayout(): React.ReactElement | null {
     DMSans_Bold: require('../assets/fonts/DMSans-Bold.ttf')
   })
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
     if (error) throw error
   }, [error])
@@ -55,8 +42,6 @@ export default function RootLayout(): React.ReactElement | null {
 }
 
 function RootLayoutNav(): React.ReactElement {
-  const colorScheme = useColorScheme()
-
   return (
     <ThemeProvider value={DarkTheme}>
       <QueryClientProvider client={queryClient}>
@@ -77,10 +62,6 @@ function RootLayoutNav(): React.ReactElement {
                   backgroundColor: '#191A28'
                 }
               }}
-            />
-            <Stack.Screen
-              name='[id]'
-              options={{ presentation: 'modal', headerShown: false }}
             />
           </Stack>
         </BottomSheetModalProvider>
