@@ -45,20 +45,19 @@ export default function Home(): React.ReactElement {
         </ScrollView>
       ) : isError ? (
         <Text>Error</Text>
-      ) : data?.pages[0].status === 'ERROR' ? (
+      ) : data?.pages.some((page) => page.status === 'ERROR') ? (
         <Text>Exceeded the maximum number of requests per minute</Text>
       ) : (
         <>
-          {/* {console.log('filtered', tickersQuery.data)} */}
-          {/* <View style={{ marginTop: 5 }}> */}
           <FlatList
             data={data?.pages.flatMap((page) => page.results)}
             numColumns={2}
+            ListEmptyComponent={<Text>No results</Text>}
             keyExtractor={(item) => item.ticker}
             renderItem={({ item }) => (
               <TickerCard ticker={item.ticker} name={item.name} />
             )}
-            onEndReachedThreshold={0.3}
+            onEndReachedThreshold={0.5}
             onEndReached={() => {
               if (hasNextPage) {
                 fetchNextPage().catch((error) => {
