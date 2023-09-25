@@ -1,10 +1,11 @@
 import { DarkTheme, ThemeProvider } from '@react-navigation/native'
 import { useFonts } from 'expo-font'
 import { SplashScreen, Stack } from 'expo-router'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Image } from 'react-native'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
+import Spalsh from '../components/SplashScreen'
 
 const queryClient = new QueryClient()
 
@@ -21,23 +22,26 @@ export default function RootLayout(): React.ReactElement | null {
     DMSans_Regular: require('../assets/fonts/DMSans-Regular.ttf'),
     DMSans_Bold: require('../assets/fonts/DMSans-Bold.ttf')
   })
-
+  const [showSplashScreen, setShowSplashScreen] = useState(true)
   useEffect(() => {
     if (error) throw error
   }, [error])
 
   useEffect(() => {
     if (loaded) {
-      setTimeout(() => {
-        SplashScreen.hideAsync()
-      }, 3000)
+      SplashScreen.hideAsync()
     }
+    setTimeout(() => {
+      setShowSplashScreen(false)
+    }, 3000)
   }, [loaded])
 
   if (!loaded) {
     return null
   }
-
+  if (showSplashScreen) {
+    return <Spalsh />
+  }
   return <RootLayoutNav />
 }
 
