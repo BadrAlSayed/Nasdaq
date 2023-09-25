@@ -40,10 +40,10 @@
         "origin": false
       },
       "eas": {
-        "projectId": "c4e86c09-271e-4763-9cee-9e553d60730b"
+        "projectId": "3fe2b966-dd2b-48b7-a90a-0e82ff42b274"
       }
     },
-    "owner": "badralsayed1",
+    "owner": "task-submit",
     "runtimeVersion": {
       "policy": "appVersion"
     },
