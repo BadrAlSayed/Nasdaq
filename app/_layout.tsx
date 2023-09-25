@@ -8,6 +8,10 @@ import { SplashScreen, Stack } from 'expo-router'
 import React, { useEffect } from 'react'
 import { useColorScheme, Image } from 'react-native'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider
+} from '@gorhom/bottom-sheet'
 
 const queryClient = new QueryClient()
 
@@ -56,28 +60,30 @@ function RootLayoutNav(): React.ReactElement {
   return (
     <ThemeProvider value={DarkTheme}>
       <QueryClientProvider client={queryClient}>
-        <Stack>
-          <Stack.Screen
-            name='(stocks)'
-            options={{
-              headerTitle: '',
-              headerLeft: () => (
-                <Image
-                  source={require('../assets/images/NasdaqLogo.png')}
-                  resizeMode='contain'
-                  style={{ width: 105, height: 50 }}
-                />
-              ),
-              headerStyle: {
-                backgroundColor: '#191A28'
-              }
-            }}
-          />
-          <Stack.Screen
-            name='[id]'
-            options={{ presentation: 'modal', headerShown: false }}
-          />
-        </Stack>
+        <BottomSheetModalProvider>
+          <Stack>
+            <Stack.Screen
+              name='(stocks)'
+              options={{
+                headerTitle: '',
+                headerLeft: () => (
+                  <Image
+                    source={require('../assets/images/NasdaqLogo.png')}
+                    resizeMode='contain'
+                    style={{ width: 105, height: 50 }}
+                  />
+                ),
+                headerStyle: {
+                  backgroundColor: '#191A28'
+                }
+              }}
+            />
+            <Stack.Screen
+              name='[id]'
+              options={{ presentation: 'modal', headerShown: false }}
+            />
+          </Stack>
+        </BottomSheetModalProvider>
       </QueryClientProvider>
     </ThemeProvider>
   )
