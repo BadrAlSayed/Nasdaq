@@ -5,7 +5,7 @@ I deployed the application. You can access it with Expo Go with this qr code
 
 ##Ios
 
-![Ios](https://github.com/BadrAlSayed/Nasdaq/assets/81752730/224160e4-a93b-4ecc-b87b-76412ddc01d9)
+[Ios](https://github.com/BadrAlSayed/Nasdaq/assets/81752730/224160e4-a93b-4ecc-b87b-76412ddc01d9)
 
 ##Android
 
