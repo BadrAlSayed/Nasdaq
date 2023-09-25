@@ -61,10 +61,12 @@ const Header: React.FC<HeaderProps> = ({ logo, ticker, open, close }) => {
       </View>
       <View style={styles.headerRightItems}>
         <Link href='../'>
-          <Image
-            source={require('../../assets/images/Cancel.png')}
-            resizeMode='contain'
-          />
+          <View style={styles.closeButton}>
+            <Image
+              source={require('../../assets/images/Cancel.png')}
+              resizeMode='contain'
+            />
+          </View>
         </Link>
       </View>
     </View>
@@ -106,10 +108,6 @@ const styles = StyleSheet.create({
     color: 'grey'
   },
   closeButton: {
-    borderRadius: 50,
-    borderColor: '#323443',
-    borderWidth: 1,
-    backgroundColor: '#242639',
     padding: 5,
     flexDirection: 'row',
     alignItems: 'center',

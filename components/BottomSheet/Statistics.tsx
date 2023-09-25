@@ -40,11 +40,7 @@ const Statistics: React.FC<Props> = ({ open, close, high, low }) => {
 
 const styles = StyleSheet.create({
   container: {
-    // justifyContent: 'flex-start',
-    // alignItems: 'flex-start'
-
     paddingBottom: 0,
-
     width: '100%'
   },
   title: {
@@ -55,14 +51,12 @@ const styles = StyleSheet.create({
   },
   price: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    backgroundColor: 'red'
+    justifyContent: 'space-between'
   },
   priceTitle: {
     fontSize: 15,
     fontFamily: 'DMSans_Regular',
     color: 'rgba(255, 255, 255, 0.60)'
-    // marginBottom: 5
   },
   priceStyle: {
     color: '#FFF',
